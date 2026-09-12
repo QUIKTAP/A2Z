@@ -103,6 +103,20 @@ h1{color:white;font-size:30px;margin-top:16px}
 .bottom-actions button:last-child{background:var(--yellow);color:var(--blue)}
 .footer{text-align:center;padding:18px 20px 26px;color:#929bae;font-size:11px}
 .footer a{color:var(--gold);font-weight:900;text-decoration:none}
+.gallery .placeholder{cursor:pointer}
+.gallery img.placeholder{width:100%;height:100%;object-fit:cover;display:block;padding:0}
+.lightbox{
+ display:none;position:fixed;inset:0;z-index:999;
+ background:rgba(3,10,35,.95);align-items:center;justify-content:center;
+ padding:24px;cursor:zoom-out;
+}
+.lightbox.active{display:flex}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox-close{
+ position:absolute;top:18px;right:22px;color:#fff;font-size:30px;
+ background:rgba(255,255,255,.12);width:42px;height:42px;border-radius:50%;
+ display:grid;place-items:center;cursor:pointer;border:1px solid rgba(255,255,255,.3);
+}
 @media(max-width:380px){.video-grid{grid-template-columns:1fr}.hero{min-height:410px}}
 </style>
 </head>
@@ -153,12 +167,12 @@ h1{color:white;font-size:30px;margin-top:16px}
   <div class="section-title">Galerie</div>
   <h2>Nos moments de voyage</h2>
   <div class="gallery">
-    <div class="placeholder">Ajouter photo 1</div>
-    <div class="placeholder">Ajouter photo 2</div>
-    <div class="placeholder">Ajouter photo 3</div>
-    <div class="placeholder">Ajouter photo 4</div>
-    <div class="placeholder">Ajouter photo 5</div>
-    <div class="placeholder">Ajouter photo 6</div>
+    <img class="placeholder" src="images/photo1.jpg" alt="Voyage 1" onclick="openLightbox(this.src)">
+    <img class="placeholder" src="images/photo2.jpg" alt="Voyage 2" onclick="openLightbox(this.src)">
+    <img class="placeholder" src="images/photo3.jpg" alt="Voyage 3" onclick="openLightbox(this.src)">
+    <img class="placeholder" src="images/photo4.jpg" alt="Voyage 4" onclick="openLightbox(this.src)">
+    <img class="placeholder" src="images/photo5.jpg" alt="Voyage 5" onclick="openLightbox(this.src)">
+    <img class="placeholder" src="images/photo6.jpg" alt="Voyage 6" onclick="openLightbox(this.src)">
   </div>
 </section>
 
@@ -196,7 +210,21 @@ h1{color:white;font-size:30px;margin-top:16px}
 </div>
 </div>
 
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img id="lightbox-img" src="" alt="Photo agrandie">
+</div>
+
 <script>
+function openLightbox(src){
+ document.getElementById("lightbox-img").src=src;
+ document.getElementById("lightbox").classList.add("active");
+ document.body.style.overflow="hidden";
+}
+function closeLightbox(){
+ document.getElementById("lightbox").classList.remove("active");
+ document.body.style.overflow="";
+}
 function saveContact(){
  const vcard=[
  "BEGIN:VCARD","VERSION:3.0","FN:A2Z Holidays","ORG:A2Z Holidays",
